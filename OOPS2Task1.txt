@@ -1,0 +1,114 @@
+// Определяем интерфейс с константой
+public interface AccessLevel {
+    int READ = 1;
+    int WRITE = 2;
+}
+
+// Определяем интерфейс с методами
+public interface UserInfo {
+    String getName();
+    int getAge();
+    void setName(String name);
+    void setAge(int age);
+}
+
+// Определяем интерфейс с default методом
+public interface Printable {
+    void print();
+    
+    default void printInfo() {
+        System.out.println("Это объект класса Printable");
+        print();
+    }
+}
+
+// Определяем интерфейс с перегруженными методами
+public interface Calculator {
+    int add(int a, int b);
+    double add(double a, double b);
+}
+
+// Определяем интерфейс с переопределенным методом
+public interface Movable {
+    void move();
+    
+    default void showPosition() {
+        System.out.println("Объект движется");
+        move();
+    }
+}
+
+// Добавляем интерфейсы к классу Пользователь
+public class User implements AccessLevel, UserInfo, Printable, Calculator, Movable {
+    private String name;
+    private int age;
+    
+    public User(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+    
+    @Override
+    public String getName() {
+        return name;
+    }
+    
+    @Override
+    public int getAge() {
+        return age;
+    }
+    
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    @Override
+    public void setAge(int age) {
+        this.age = age;
+    }
+    
+    @Override
+    public void print() {
+        System.out.println("Имя: " + name + ", Возраст: " + age);
+    }
+    
+    @Override
+    public int add(int a, int b) {
+        return a + b;
+    }
+    
+    @Override
+    public double add(double a, double b) {
+        return a + b;
+    }
+    
+    @Override
+    public void move() {
+        System.out.println("Объект Пользователь движется");
+    }
+}
+
+// Пример использования класса с добавленными интерфейсами
+public class Main {
+    public static void main(String[] args) {
+        User user = new User("John", 25);
+        
+        System.out.println("Имя пользователя: " + user.getName());
+        System.out.println("Возраст пользователя: " + user.getAge());
+        
+        user.print();
+        user.printInfo();
+        
+        int sum1 = user.add(5, 10);
+        double sum2 = user.add(3.5, 2.7);
+        
+        System.out.println("Сумма (целые числа): " + sum1);
+        System.out.println("Сумма (вещественные числа): " + sum2);
+        
+        user.move();
+        user.showPosition();
+        
+        System.out.println("Уровень доступа: " + AccessLevel.READ);
+    }
+}
